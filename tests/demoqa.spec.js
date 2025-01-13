@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test";
-// import { name } from "../playwright.config";
     
     test.describe('check demoqa functionality', () => {
         test.beforeEach(async ({page}) => {
@@ -30,7 +29,7 @@ import { test, expect } from "@playwright/test";
             await page.locator('span:text-is("Radio Button")').click();
             await page.getByText('Yes').click();
 
-            await expect(page.locator('.mt-3')).toContainText('You have selected Yes')
+            await expect(page.locator('.mt-3')).toContainText('You have selected Yes');
         });
 
         test('verify ability to check a checkbox', async ({page}) => {
@@ -54,7 +53,24 @@ import { test, expect } from "@playwright/test";
             await page.getByPlaceholder('Department').fill('IT');
             await page.getByRole('button', {name: 'Submit'}).click()
 
-            await expect(page.locator('.rt-tbody')).toContainText('TomCruise62tom@gmail.com10500IT')
+            await expect(page.locator('.rt-tbody')).toContainText('TomCruise62tom@gmail.com10500IT');
+        });
+
+        test('verify modal window is opened', async ({page}) => {
+            await page.locator('.card:nth-child(3)').click();
+            await page.locator('span:text-is("Modal Dialogs")').click();
+            await page.getByRole('button', {name: 'Small modal'}).click();
+            
+            await expect(page.locator('.modal-content')).toBeVisible();
+        });
+
+        test('verify picking date', async ({page}) => {
+            await page.locator('.card:nth-child(4)').click();
+            await page.locator('span:text-is("Date Picker")').click();
+            await page.locator('#datePickerMonthYearInput').click();
+            await page.locator('.react-datepicker__day--015').click();
+
+            await expect(page.locator('#datePickerMonthYearInput')).toHaveValue('01/15/2025');
         });
 
         test('verify ability to login', async ({page}) => {
